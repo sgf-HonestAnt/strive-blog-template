@@ -12,7 +12,7 @@ class Blog extends Component {
   componentDidMount() {
     const { id } = this.props.match.params;
     console.log(posts);
-    const blog = posts.find((post) => post._id.toString() === id); 
+    const blog = posts.find((post) => post._id.toString() === id); // fetch the blog posts here
     if (blog) {
       this.setState({ blog, loading: false });
     } else {

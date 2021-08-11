@@ -3,6 +3,8 @@ import "react-quill/dist/quill.snow.css";
 import ReactQuill from "react-quill";
 import { Container, Form, Button } from "react-bootstrap";
 import "./styles.css";
+import { BLOG_ENDPOINT } from "../../endpoints";
+
 export default class NewBlogPost extends Component {
   constructor(props) {
     super(props);
@@ -34,9 +36,8 @@ export default class NewBlogPost extends Component {
   sendPost = async(e) => {
     e.preventDefault()
     try {
-      let response = await fetch("http://localhost:3333/blogs", {
-        // endpoint, {
-        method: 'POST', // this.state.method,
+      let response = await fetch(BLOG_ENDPOINT, {
+        method: 'POST',
         headers: {
           'content-type' : 'application/json'
         },
@@ -45,8 +46,6 @@ export default class NewBlogPost extends Component {
       if (response.ok) { // && id === undefined
         alert("POSTED")
         this.clearForm()
-      // } else if (response.ok && id !== undefined) {
-      //   alert("POSTED")
       } else {
         alert("Something went wrong")
       }
@@ -60,7 +59,6 @@ export default class NewBlogPost extends Component {
     return (
       <Container className="new-blog-container">
         <Form className="mt-5" onSubmit={e => this.sendPost(e)} onReset={e => this.clearForm(e)}>
-        {/* <Form className="mt-5" onSubmit={e => this.sendPost(e)} onReset={e => this.clearForm(e)}> */}
           <Form.Group controlId="title" className="mt-3">
             <Form.Label>Title</Form.Label>
             <Form.Control 

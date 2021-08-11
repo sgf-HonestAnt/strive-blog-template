@@ -1,0 +1,1 @@
+export const BLOG_ENDPOINT = "http://localhost:3333/blogs"
