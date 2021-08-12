@@ -35,17 +35,18 @@ export default class NewBlogPost extends Component {
 
   sendPost = async(e) => {
     e.preventDefault()
+    console.log("Trying to send a new blog post!")
     try {
       let response = await fetch(BLOG_ENDPOINT, {
         method: 'POST',
+        body: JSON.stringify(this.state),
         headers: {
           'content-type' : 'application/json'
-        },
-        body: JSON.stringify(this.state)
+        }
       })
       if (response.ok) { // && id === undefined
-        alert("POSTED")
-        this.clearForm()
+        console.log(this.state)
+        alert("NEW BLOG POSTED")
       } else {
         alert("Something went wrong")
       }
