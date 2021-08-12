@@ -2,22 +2,56 @@ import React, { Component } from "react";
 import { Container, Image } from "react-bootstrap";
 import { withRouter } from "react-router";
 import BlogAuthor from "../../components/blog/blog-author";
-import posts from "../../data/posts.json";
+import { BLOG_ENDPOINT } from "../../endpoints";
+// import posts from "../../data/posts.json";
 import "./styles.css";
 class Blog extends Component {
   state = {
     blog: {},
+    comments: [],
     loading: true,
   };
   componentDidMount() {
-    const { id } = this.props.match.params;
-    console.log(posts);
-    const blog = posts.find((post) => post._id.toString() === id); // fetch the blog posts here
-    if (blog) {
-      this.setState({ blog, loading: false });
-    } else {
-      this.props.history.push("/404");
+    this.fetchSinglePost(this.props.match.params);
+  }
+  fetchSinglePost = async ({ id }) => {
+    try {
+      let response = await fetch(
+        `${BLOG_ENDPOINT}/${id}`, {
+          method: 'GET',
+          headers: {
+            'content-type' : 'application/json'
+          }
+      });
+      let data = await response.json();
+      if (data) {
+        this.setState({ blog: data, loading: false })
+        this.fetchComments(this.props.match.params);
+      } else {
+        this.props.history.push("/404");
+      }
+    } catch (error) {
+      console.log("error")
     }
+  };
+  fetchComments = async ({ id }) => {
+    try {
+      let response = await fetch(
+        `${BLOG_ENDPOINT}/${id}/comments`, {
+          method: 'GET',
+          headers: {
+            'content-type' : 'application/json'
+          }
+      });
+      let data = await response.json();
+      if (data) {
+        this.setState({ ...this.state, comments: data })
+      }
+    } catch (error) {
+      console.log("error")
+    }
+  };
+  componentDidUpdate(prevProps, prevState) {
   }
 
   render() {
@@ -42,6 +76,8 @@ class Blog extends Component {
             </div>
 
             <div dangerouslySetInnerHTML={{ __html: blog.content }}></div>
+            <div>{this.state.comments === [] ? <></> : this.state.comments.map(c => <div><span>{c.name}</span>: {c.text}</div>)}</div>
+            {/* this needs work */}
           </Container>
         </div>
       );

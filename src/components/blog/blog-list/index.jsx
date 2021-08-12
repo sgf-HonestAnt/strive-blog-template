@@ -14,9 +14,12 @@ export default class BlogList extends Component {
   fetchBlogPosts = async () => {
     try {
       let response = await fetch(
-        BLOG_ENDPOINT
-        // `${ENDPOINT_BLOGS}`
-      );
+        BLOG_ENDPOINT, {
+          method: 'GET',
+          headers: {
+            'content-type' : 'application/json'
+          }
+      });
       let postsJson = await response.json();
       this.setState({ posts: postsJson, loading: false })
     } catch (error) {
