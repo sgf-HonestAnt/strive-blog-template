@@ -11,7 +11,8 @@ export default class NewBlogPost extends Component {
     this.state = { 
       category: "Category 1",
       title: "",
-      content: ""
+      content: "",
+      cover: ""
     };
     this.handleChange = this.handleChange.bind(this);
   }
@@ -29,7 +30,8 @@ export default class NewBlogPost extends Component {
     this.setState({ 
       title: "",
       category: "Category 1",
-      content: ""
+      content: "",
+      cover: ""
     })
   }
 
@@ -89,6 +91,15 @@ export default class NewBlogPost extends Component {
               value={this.state.content}
               onChange={this.handleChange}
               className="new-blog-content"
+            />
+          </Form.Group>
+          <Form.Group controlId="cover" className="mt-3">
+            <Form.Control
+            size="lg" 
+            type="file"
+            className="form-control-file"
+            value={this.state.cover}
+            onChange={this.handleClick}
             />
           </Form.Group>
           <Form.Group className="d-flex mt-3 justify-content-end">
