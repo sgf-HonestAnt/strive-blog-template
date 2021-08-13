@@ -44,10 +44,22 @@ export default class NewBlogPost extends Component {
         body: JSON.stringify(this.state),
         headers: {
           'content-type' : 'application/json'
-        }
+      }
       })
-      if (response.ok) { // && id === undefined
-        console.log(this.state)
+      // if (response.ok && this.state.cover !== "") {
+      //   let newCover = this.state.cover
+      //   await fetch(`${BLOG_ENDPOINT}/${ID}/uploadCover`, { // NEED TO MAKE ID EXIST HERE
+      //     method: 'POST',
+      //     body: JSON.stringify(newCover), // ??????????????????
+      //     headers: {
+      //       'content-type' : 'multipart/form-data'
+      //   }
+      //   })
+      //   console.log(this.state)
+      //   alert("NEW BLOG WITH COVER IMG POSTED")
+      // } else 
+      if (response.ok) {
+        console.log(response, this.state)
         alert("NEW BLOG POSTED")
       } else {
         alert("Something went wrong")
