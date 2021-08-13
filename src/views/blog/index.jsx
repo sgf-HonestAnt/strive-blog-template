@@ -76,7 +76,7 @@ class Blog extends Component {
             </div>
 
             <div dangerouslySetInnerHTML={{ __html: blog.content }}></div>
-            <div>{this.state.comments === [] ? <></> : this.state.comments.map(c => <div><span>{c.name}</span>: {c.text}</div>)}</div>
+            <div>{this.state.comments === [] ? <></> : this.state.comments.map(c => <div className="blog-details-comments-container"><span className="blog-details-comment-author">{c.name}:</span><span className="blog-details-single-comment"><i className="fas fa-quote-left"></i>{c.text}</span></div>)}</div>
             {/* this needs work */}
           </Container>
         </div>

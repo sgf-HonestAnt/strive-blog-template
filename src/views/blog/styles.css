@@ -37,3 +37,45 @@
   flex-direction: column;
   align-items: center;
 }
+
+.blog-details-comments-container {
+  padding: 10px;
+  margin: 5px 0;
+}
+
+.blog-details-single-comment {
+  position: relative;
+  padding: 10px 30px 10px 10px;
+  color: #fff;
+}
+
+.blog-details-single-comment i {
+  padding-right: 10px;
+}
+
+.blog-details-comment-author {
+  font-weight: 800;
+  position: relative;
+  padding: 10px 30px 10px 10px;
+}
+
+.blog-details-single-comment::before, .blog-details-comment-author::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  transform: skew(-30deg);
+  transform-origin:top;
+  z-index: -1;
+}
+
+.blog-details-comment-author::before {
+  background: #01FF84; 
+}
+
+.blog-details-single-comment::before {
+  background: black;
+}
