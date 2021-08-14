@@ -1,0 +1,17 @@
+.blog-details-change-img-button {
+    color: rgb(43, 36, 36);
+    background-color: #01FF84;
+    border: 1px solid #01FF84;
+    position: absolute;
+    top: 50px;
+    right: 0;
+}
+
+.blog-details-img-form {
+    position: absolute;
+    right: 0;
+}
+
+.invisible-form-control {
+    visibility: hidden;
+}

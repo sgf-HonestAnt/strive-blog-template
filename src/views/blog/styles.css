@@ -8,6 +8,10 @@
   margin-top: 50px;
 }
 
+.blog-details-cover-container {
+  position: relative;
+}
+
 .blog-details-root {
   display: flex;
   width: 100%;

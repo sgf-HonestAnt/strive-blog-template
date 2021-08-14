@@ -2,11 +2,14 @@ import React, { Component } from "react";
 import { Container, Image } from "react-bootstrap";
 import { withRouter } from "react-router";
 import BlogAuthor from "../../components/blog/blog-author";
+import CoverButton from "../cover-button";
+import CommentForm from "../comment-form";
 import { BLOG_ENDPOINT } from "../../endpoints";
 // import posts from "../../data/posts.json";
 import "./styles.css";
 class Blog extends Component {
   state = {
+    verified: true,
     blog: {},
     comments: [],
     loading: true,
@@ -51,7 +54,14 @@ class Blog extends Component {
       console.log("error")
     }
   };
+  submitNewComment = e => {
+    this.setState({ ...this.state, loading: true })
+    e.preventDefault()
+  }
   componentDidUpdate(prevProps, prevState) {
+    if (prevState.loading !== this.state.loading) {
+      this.fetchSinglePost(this.props.match.params);
+    }
   }
 
   render() {
@@ -62,9 +72,13 @@ class Blog extends Component {
       return (
         <div className="blog-details-root">
           <Container>
+            <div className="blog-details-cover-container">
+            { this.state.verified && 
+            <CoverButton cover={this.state.blog.cover} post={this.props.match.params} />
+            }
             <Image className="blog-details-cover" src={blog.cover} fluid />
+            </div>
             <h1 className="blog-details-title">{blog.title}</h1>
-
             <div className="blog-details-container">
               <div className="blog-details-author">
                 <BlogAuthor {...blog.author} />
@@ -76,8 +90,11 @@ class Blog extends Component {
             </div>
 
             <div dangerouslySetInnerHTML={{ __html: blog.content }}></div>
-            <div>{this.state.comments === [] ? <></> : this.state.comments.map(c => <div className="blog-details-comments-container"><span className="blog-details-comment-author">{c.name}:</span><span className="blog-details-single-comment"><i className="fas fa-quote-left"></i>{c.text}</span></div>)}</div>
-            {/* this needs work */}
+
+            <div className="mt-5">{this.state.comments === [] ? <></> : this.state.comments.map(c => <div key={c._id} className="blog-details-comments-container"><span className="blog-details-comment-author">{c.name}:</span><span className="blog-details-single-comment"><i className="fas fa-quote-left"></i>{c.text}</span></div>)}</div>
+
+            <CommentForm post={this.props.match.params} submitNewComment={this.submitNewComment.bind(this)} />
+
           </Container>
         </div>
       );

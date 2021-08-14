@@ -11,8 +11,12 @@ export default class NewBlogPost extends Component {
     this.state = { 
       category: "Category 1",
       title: "",
-      content: "",
-      cover: ""
+      cover: "",
+      author: {
+        "name": "Lisbeth Salander",
+        "avatar": "http://localhost:3333/img/avatars/AUTH_BlogPostTestAuthor.jpg"
+      },
+      content: ""
     };
     this.handleChange = this.handleChange.bind(this);
   }
@@ -60,7 +64,6 @@ export default class NewBlogPost extends Component {
       // } else 
       if (response.ok) {
         console.log(response, this.state)
-        alert("NEW BLOG POSTED")
       } else {
         alert("Something went wrong")
       }
@@ -70,7 +73,7 @@ export default class NewBlogPost extends Component {
   }
 
   render() {
-    console.log(this.state)
+    // console.log(this.state)
     return (
       <Container className="new-blog-container">
         <Form className="mt-5" onSubmit={e => this.sendPost(e)} onReset={e => this.clearForm(e)}>
