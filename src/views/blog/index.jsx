@@ -58,6 +58,10 @@ class Blog extends Component {
     this.setState({ ...this.state, loading: true })
     e.preventDefault()
   }
+  submitNewCover = e => {
+    this.setState({ ...this.state, loading: true })
+    e.preventDefault()
+  }
   componentDidUpdate(prevProps, prevState) {
     if (prevState.loading !== this.state.loading) {
       this.fetchSinglePost(this.props.match.params);
@@ -74,7 +78,7 @@ class Blog extends Component {
           <Container>
             <div className="blog-details-cover-container">
             { this.state.verified && 
-            <CoverButton cover={this.state.blog.cover} post={this.props.match.params} />
+            <CoverButton cover={this.state.blog.cover} post={this.props.match.params} submitNewCover={this.submitNewCover.bind(this)} />
             }
             <Image className="blog-details-cover" src={blog.cover} fluid />
             </div>

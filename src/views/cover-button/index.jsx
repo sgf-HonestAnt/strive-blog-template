@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import FormData from "form-data";
 import { Form, Button } from "react-bootstrap";
 import "./styles.css";
 import { BLOG_ENDPOINT } from "../../endpoints";
@@ -7,31 +8,32 @@ export default class CoverButton extends Component {
     constructor(props) {
       super(props);
       this.state = {
-          cover: ""
+          file: null
       };
     }
 
-    setCover = e => {
-        this.setState({ cover: e.target.value })
+    setCover = async e => {
+        console.log(e.target.value) // returns fake path
+        console.log(e.target.files[0]) // returns File name, type, size, etc
+        const formData = new FormData()
+        formData.append('cover', e.target.value)
+        console.log(formData)
+        this.setState({ ...this.state, file: formData }) // cover: "C:...", file: "FormData"
     }
 
     uploadCover = async(e, id) => { 
-        //500 
-        // THIS IS NOT YET WORKING, CHECK OTHER REPOS
-        // Multipart Boundary Not Found
         e.preventDefault()
-        let formData = new FormData()
-        formData.append('cover', this.state.cover)
         console.log("Trying to send a new cover image --> ", this.state)
         try {
+            console.log(this.state.file)
             let response = await fetch(`${BLOG_ENDPOINT}/${id}/uploadCover`, {
               method: 'POST',
-              body: formData
+              body: this.state // Cannot read property originalname of undefined ==> req.file is undefined
             })
             if (response.ok) {
               console.log(response, this.state)
               console.log("NEW COVER POSTED")
-              this.props.submitNewComment(e)
+              this.props.submitNewCover(e)
             } else {
               alert("Something went wrong")
             }
