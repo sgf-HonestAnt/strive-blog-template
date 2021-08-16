@@ -9,7 +9,7 @@ import { BLOG_ENDPOINT } from "../../endpoints";
 import "./styles.css";
 class Blog extends Component {
   state = {
-    verified: true,
+    verified: true, // when signed in as author or admin, verified = true.
     blog: {},
     comments: [],
     loading: true,
@@ -54,11 +54,7 @@ class Blog extends Component {
       console.log("error")
     }
   };
-  submitNewComment = e => {
-    this.setState({ ...this.state, loading: true })
-    e.preventDefault()
-  }
-  submitNewCover = e => {
+  reloadPage = e => {
     this.setState({ ...this.state, loading: true })
     e.preventDefault()
   }
@@ -78,7 +74,7 @@ class Blog extends Component {
           <Container>
             <div className="blog-details-cover-container">
             { this.state.verified && 
-            <CoverButton cover={this.state.blog.cover} post={this.props.match.params} submitNewCover={this.submitNewCover.bind(this)} />
+            <CoverButton cover={this.state.blog.cover} post={this.props.match.params} reloadPage={this.reloadPage.bind(this)} />
             }
             <Image className="blog-details-cover" src={blog.cover} fluid />
             </div>
@@ -97,7 +93,7 @@ class Blog extends Component {
 
             <div className="mt-5">{this.state.comments === [] ? <></> : this.state.comments.map(c => <div key={c._id} className="blog-details-comments-container"><span className="blog-details-comment-author">{c.name}:</span><span className="blog-details-single-comment"><i className="fas fa-quote-left"></i>{c.text}</span></div>)}</div>
 
-            <CommentForm post={this.props.match.params} submitNewComment={this.submitNewComment.bind(this)} />
+            <CommentForm post={this.props.match.params} reloadPage={this.reloadPage.bind(this)} />
 
           </Container>
         </div>

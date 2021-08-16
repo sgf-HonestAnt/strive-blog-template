@@ -31,7 +31,7 @@ export default class CommentForm extends Component {
             if (response.ok) {
               console.log(response, this.state)
               console.log("NEW COMMENT POSTED")
-              this.props.submitNewComment(e)
+              this.props.reloadPage(e)
             } else {
               alert("Something went wrong")
             }

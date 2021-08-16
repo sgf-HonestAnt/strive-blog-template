@@ -28,14 +28,14 @@ export default class CoverButton extends Component {
           url: `${BLOG_ENDPOINT}/${id}/uploadCover`,
           data: data
         })
+        this.props.reloadPage(e)
     }
-
-    // I WANT TO RELOAD PAGE TO SHOW NEW COVER AS WELL!
 
   render() {
       console.log(this.state)
     return (
         <Form onSubmit={e => this.uploadCover(e, this.props.post.id)}>
+        {/* Implement Dummy Button for file upload so we can control appearance        */}
         <Button className="blog-details-change-img-button" type="submit">
           {this.props.cover===undefined?<>Upload Image</>:<>Edit Image</>}
         </Button> 
