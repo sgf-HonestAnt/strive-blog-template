@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import FormData from "form-data";
+import axios from "axios";
 import { Form, Button } from "react-bootstrap";
 import "./styles.css";
 import { BLOG_ENDPOINT } from "../../endpoints";
@@ -8,39 +9,28 @@ export default class CoverButton extends Component {
     constructor(props) {
       super(props);
       this.state = {
-          file: null
+          selectedFile: null
       };
     }
 
-    setCover = async e => {
-        console.log(e.target.value) // returns fake path
-        console.log(e.target.files[0]) // returns File name, type, size, etc
-        const formData = new FormData()
-        formData.append('cover', e.target.value)
-        console.log(formData)
-        this.setState({ ...this.state, file: formData }) // cover: "C:...", file: "FormData"
+    setCover = event => {
+      const file = event.target.files[0] 
+      this.setState({ selectedFile: file })
     }
 
     uploadCover = async(e, id) => { 
         e.preventDefault()
-        console.log("Trying to send a new cover image --> ", this.state)
-        try {
-            console.log(this.state.file)
-            let response = await fetch(`${BLOG_ENDPOINT}/${id}/uploadCover`, {
-              method: 'POST',
-              body: this.state // Cannot read property originalname of undefined ==> req.file is undefined
-            })
-            if (response.ok) {
-              console.log(response, this.state)
-              console.log("NEW COVER POSTED")
-              this.props.submitNewCover(e)
-            } else {
-              alert("Something went wrong")
-            }
-          } catch (error) {
-            alert(error)
-          }
+        const data = new FormData()
+        console.log("Trying to send a new cover image --> ", this.state.selectedFile)
+        data.append("cover", this.state.selectedFile)
+        await axios({
+          method: "post",
+          url: `${BLOG_ENDPOINT}/${id}/uploadCover`,
+          data: data
+        })
     }
+
+    // I WANT TO RELOAD PAGE TO SHOW NEW COVER AS WELL!
 
   render() {
       console.log(this.state)
