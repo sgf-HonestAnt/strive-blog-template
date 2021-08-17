@@ -3,7 +3,6 @@ import "react-quill/dist/quill.snow.css";
 import ReactQuill from "react-quill";
 import { Container, Form, Button } from "react-bootstrap";
 import "./styles.css";
-import { BLOG_ENDPOINT } from "../../endpoints";
 
 export default class NewBlogPost extends Component {
   constructor(props) {
@@ -14,7 +13,7 @@ export default class NewBlogPost extends Component {
       cover: "",
       author: {
         "name": "Lisbeth Salander",
-        "avatar": "http://localhost:3333/img/avatars/AUTH_BlogPostTestAuthor.jpg"
+        "avatar": `${process.env.REACT_APP_BE_URL}/img/avatars/AUTH_BlogPostTestAuthor.jpg`
       },
       content: ""
     };
@@ -43,7 +42,7 @@ export default class NewBlogPost extends Component {
     e.preventDefault()
     console.log("Trying to send a new blog post!")
     try {
-      let response = await fetch(BLOG_ENDPOINT, {
+      let response = await fetch(`${process.env.REACT_APP_BE_URL}`, {
         method: 'POST',
         body: JSON.stringify(this.state),
         headers: {

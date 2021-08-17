@@ -1,1 +1,0 @@
-export const BLOG_ENDPOINT = `${process.env.REACT_APP_BE_URL}`

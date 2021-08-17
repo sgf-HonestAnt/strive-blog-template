@@ -1,8 +1,6 @@
 import React, { Component } from "react";
 import { Row, Col } from "react-bootstrap";
 import BlogItem from "../blog-item";
-import { BLOG_ENDPOINT } from "../../../endpoints";
-// import posts from "../../../data/posts.json";
 export default class BlogList extends Component { 
   state = {
     posts: [],
@@ -14,7 +12,7 @@ export default class BlogList extends Component {
   fetchBlogPosts = async () => {
     try {
       let response = await fetch(
-        BLOG_ENDPOINT, {
+        `${process.env.REACT_APP_BE_URL}`, {
           method: 'GET',
           headers: {
             'content-type' : 'application/json'

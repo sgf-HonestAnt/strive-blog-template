@@ -4,7 +4,6 @@ import { withRouter } from "react-router";
 import BlogAuthor from "../../components/blog/blog-author";
 import CoverButton from "../cover-button";
 import CommentForm from "../comment-form";
-import { BLOG_ENDPOINT } from "../../endpoints";
 // import posts from "../../data/posts.json";
 import "./styles.css";
 class Blog extends Component {

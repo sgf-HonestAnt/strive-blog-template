@@ -3,7 +3,6 @@ import FormData from "form-data";
 import axios from "axios";
 import { Form, Button } from "react-bootstrap";
 import "./styles.css";
-import { BLOG_ENDPOINT } from "../../endpoints";
 
 export default class CoverButton extends Component {
     constructor(props) {
@@ -25,7 +24,7 @@ export default class CoverButton extends Component {
         data.append("cover", this.state.selectedFile)
         await axios({
           method: "post",
-          url: `${BLOG_ENDPOINT}/${id}/uploadCover`,
+          url: `${process.env.REACT_APP_BE_URL}/${id}/uploadCover`,
           data: data
         })
         this.props.reloadPage(e)

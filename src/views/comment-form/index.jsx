@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { Form, Button } from "react-bootstrap";
 import "./styles.css";
-import { BLOG_ENDPOINT } from "../../endpoints";
 
 export default class CommentForm extends Component {
     constructor(props) {
@@ -21,7 +20,7 @@ export default class CommentForm extends Component {
         e.preventDefault()
         console.log("Trying to send a new comment --> ", this.state)
         try {
-            let response = await fetch(`${BLOG_ENDPOINT}/${id}/comments`, { // trouble catching this postID
+            let response = await fetch(`${process.env.REACT_APP_BE_URL}/${id}/comments`, { // trouble catching this postID
               method: 'POST',
               body: JSON.stringify(this.state),
               headers: {
