@@ -24,7 +24,7 @@ export default class CoverButton extends Component {
         data.append("cover", this.state.selectedFile)
         await axios({
           method: "post",
-          url: `${process.env.REACT_APP_BE_URL}/${id}/uploadCover`,
+          url: `${process.env.REACT_APP_BE_URL}/blogs/${id}/uploadCover`,
           data: data
         })
         this.props.reloadPage(e)

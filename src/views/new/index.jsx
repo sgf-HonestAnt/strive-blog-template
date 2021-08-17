@@ -13,7 +13,7 @@ export default class NewBlogPost extends Component {
       cover: "",
       author: {
         "name": "Lisbeth Salander",
-        "avatar": `${process.env.REACT_APP_BE_URL}/img/avatars/AUTH_BlogPostTestAuthor.jpg`
+        "avatar": "https://ui-avatars.com/api/?name=L+S"
       },
       content: ""
     };
@@ -42,7 +42,7 @@ export default class NewBlogPost extends Component {
     e.preventDefault()
     console.log("Trying to send a new blog post!")
     try {
-      let response = await fetch(`${process.env.REACT_APP_BE_URL}`, {
+      let response = await fetch(`${process.env.REACT_APP_BE_URL}/blogs`, {
         method: 'POST',
         body: JSON.stringify(this.state),
         headers: {
