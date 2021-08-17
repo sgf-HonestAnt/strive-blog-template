@@ -1,1 +1,1 @@
-export const BLOG_ENDPOINT = "http://localhost:3333/blogs"
+export const BLOG_ENDPOINT = `${process.env.REACT_APP_BE_URL}`
