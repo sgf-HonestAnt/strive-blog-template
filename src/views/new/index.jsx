@@ -65,9 +65,9 @@ export default class NewBlogPost extends Component {
       })
       if (response.ok && this.state.selectedFile !== null) {
         await this.fetchPostID()
-        this.sendFile(this.state._id)
+        await this.sendFile(this.state._id)
+        this.props.history.push("")
       } else if (response.ok) {
-        console.log(response, this.state)
         this.props.history.push("")
       } else {
         alert("Something went wrong")
