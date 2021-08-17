@@ -30,6 +30,7 @@ export default class NavBar extends Component {
             </svg>
             Post Article
           </Button>
+          
         </Container>
       </Navbar>
     );

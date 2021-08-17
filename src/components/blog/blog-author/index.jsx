@@ -15,7 +15,7 @@ export default class BlogAuthor extends Component {
         <Col>
           <div>by</div>
           <h6>{name}</h6>
-          {/* Implement function to change author avatar if signed in as that author*/}
+          {/* on clicking edit, go to new page for changing avatar */}
         </Col>
       </Row>
     );
