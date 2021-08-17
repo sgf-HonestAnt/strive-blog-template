@@ -4,8 +4,8 @@ import { withRouter } from "react-router";
 import BlogAuthor from "../../components/blog/blog-author";
 import CoverButton from "../cover-button";
 import CommentForm from "../comment-form";
-// import posts from "../../data/posts.json";
 import "./styles.css";
+
 class Blog extends Component {
   state = {
     verified: true, // when signed in as author or admin, verified = true.
