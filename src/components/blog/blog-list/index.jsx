@@ -21,7 +21,7 @@ export default class BlogList extends Component {
       let postsJson = await response.json();
       this.setState({ posts: postsJson, loading: false })
     } catch (error) {
-      console.log("error")
+      console.log(`error fetching from ${process.env.REACT_APP_BE_URL}/blogs`)
     }
   };
   componentDidUpdate(prevProps, prevState) {
