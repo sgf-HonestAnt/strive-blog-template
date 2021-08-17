@@ -20,7 +20,7 @@ class Blog extends Component {
   fetchSinglePost = async ({ id }) => {
     try {
       let response = await fetch(
-        `${BLOG_ENDPOINT}/${id}`, {
+        `${process.env.REACT_APP_BE_URL}/${id}`, {
           method: 'GET',
           headers: {
             'content-type' : 'application/json'
@@ -40,7 +40,7 @@ class Blog extends Component {
   fetchComments = async ({ id }) => {
     try {
       let response = await fetch(
-        `${BLOG_ENDPOINT}/${id}/comments`, {
+        `${process.env.REACT_APP_BE_URL}/${id}/comments`, {
           method: 'GET',
           headers: {
             'content-type' : 'application/json'
