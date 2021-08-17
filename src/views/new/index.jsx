@@ -68,6 +68,7 @@ export default class NewBlogPost extends Component {
         this.sendFile(this.state._id)
       } else if (response.ok) {
         console.log(response, this.state)
+        this.props.history.push("")
       } else {
         alert("Something went wrong")
       }
