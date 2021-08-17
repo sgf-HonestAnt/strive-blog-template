@@ -37,7 +37,7 @@ export default class BlogList extends Component {
             </Col>
           ))}
         </Row>
-       ) : (<Row></Row>)
+       ) : (<Row></Row>) 
     );
   }
 }

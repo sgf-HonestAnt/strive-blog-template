@@ -1,4 +1,6 @@
 import React, { Component } from "react";
+import FormData from "form-data";
+import axios from "axios";
 import "react-quill/dist/quill.snow.css";
 import ReactQuill from "react-quill";
 import { Container, Form, Button } from "react-bootstrap";
@@ -10,12 +12,14 @@ export default class NewBlogPost extends Component {
     this.state = { 
       category: "Category 1",
       title: "",
-      cover: "",
       author: {
-        "name": "Lisbeth Salander",
-        "avatar": "https://ui-avatars.com/api/?name=L+S"
+        "ID": "AUTH_greatscott",
+        "name": "Michael Scott",
+        "avatar": "https://res.cloudinary.com/dowvu52wz/image/upload/v1629201062/avatars/p7cdvhbcu25faycpjkov.jpg"
       },
-      content: ""
+      content: "",
+      _id: "",
+      selectedFile: null
     };
     this.handleChange = this.handleChange.bind(this);
   }
@@ -29,12 +33,22 @@ export default class NewBlogPost extends Component {
     this.setState({ ...this.state, [id]: e.target.value })
   }
 
+  setCover = event => {
+    const file = event.target.files[0] 
+    this.setState({ ...this.state, selectedFile: file })
+  }
+
   clearForm = () => {
     this.setState({ 
-      title: "",
       category: "Category 1",
+      title: "",
+      author: {
+        "ID": "AUTH_greatscott",
+        "name": "Michael Scott",
+        "avatar": "https://res.cloudinary.com/dowvu52wz/image/upload/v1629201062/avatars/p7cdvhbcu25faycpjkov.jpg"
+      },
       content: "",
-      cover: ""
+      selectedFile: null
     })
   }
 
@@ -44,24 +58,15 @@ export default class NewBlogPost extends Component {
     try {
       let response = await fetch(`${process.env.REACT_APP_BE_URL}/blogs`, {
         method: 'POST',
-        body: JSON.stringify(this.state),
+        body: JSON.stringify({category:this.state.category,title:this.state.title,author:this.state.author,content:this.state.content}),
         headers: {
           'content-type' : 'application/json'
-      }
+        }
       })
-      // if (response.ok && this.state.cover !== "") {
-      //   let newCover = this.state.cover
-      //   await fetch(`${BLOG_ENDPOINT}/${ID}/uploadCover`, { // NEED TO MAKE ID EXIST HERE
-      //     method: 'POST',
-      //     body: JSON.stringify(newCover), // ??????????????????
-      //     headers: {
-      //       'content-type' : 'multipart/form-data'
-      //   }
-      //   })
-      //   console.log(this.state)
-      //   alert("NEW BLOG WITH COVER IMG POSTED")
-      // } else 
-      if (response.ok) {
+      if (response.ok && this.state.selectedFile !== null) {
+        await this.fetchPostID()
+        this.sendFile(this.state._id)
+      } else if (response.ok) {
         console.log(response, this.state)
       } else {
         alert("Something went wrong")
@@ -71,8 +76,41 @@ export default class NewBlogPost extends Component {
     }
   }
 
+  fetchPostID = async () => {
+    try {
+      let response = await fetch(
+        `${process.env.REACT_APP_BE_URL}/blogs`, {
+          method: 'GET',
+          headers: {
+            'content-type' : 'application/json'
+          }
+      });
+      const postsJson = await response.json();
+      const newPost = postsJson.find(p => p.title === this.state.title && p.content === this.state.content)
+      console.log(newPost._id)
+      this.setState({ ...this.state, _id: newPost._id })
+    } catch (error) {
+      console.log("error")
+    }
+  };
+
+  sendFile = async(id) => { 
+    if (this.state.selectedFile !== null) {
+      console.log("Trying to send a new file!")
+      const data = new FormData()
+      data.append("cover", this.state.selectedFile)
+      await axios({
+        method: "post",
+        url: `${process.env.REACT_APP_BE_URL}/blogs/${id}/uploadCover`,
+        data: data
+      })
+    } else {
+      console.log("no file selected!")
+    }
+  }
+
   render() {
-    // console.log(this.state)
+    console.log(this.state)
     return (
       <Container className="new-blog-container">
         <Form className="mt-5" onSubmit={e => this.sendPost(e)} onReset={e => this.clearForm(e)}>
@@ -113,7 +151,7 @@ export default class NewBlogPost extends Component {
             type="file"
             className="form-control-file"
             value={this.state.cover}
-            onChange={this.handleClick}
+            onChange={this.setCover}
             />
           </Form.Group>
           <Form.Group className="d-flex mt-3 justify-content-end">
