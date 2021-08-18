@@ -111,7 +111,6 @@ export default class NewBlogPost extends Component {
   }
 
   render() {
-    console.log(this.state)
     return (
       <Container className="new-blog-container">
         <Form className="mt-5" onSubmit={e => this.sendPost(e)} onReset={e => this.clearForm(e)}>

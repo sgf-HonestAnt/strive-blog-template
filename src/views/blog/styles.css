@@ -42,6 +42,10 @@
   align-items: center;
 }
 
+.blog-details-download-pdf {
+  font-weight: 700;
+}
+
 .blog-details-comments-container {
   padding: 10px;
   margin: 5px 0;

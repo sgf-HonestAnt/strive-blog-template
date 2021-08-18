@@ -40,7 +40,6 @@ export default class CommentForm extends Component {
     }
 
   render() {
-    console.log(this.state)
     return (
         <>
         <div className="mt-5"><strong>Tell us what you think!</strong></div>

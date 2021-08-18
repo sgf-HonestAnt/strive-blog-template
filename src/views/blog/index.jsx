@@ -90,6 +90,11 @@ class Blog extends Component {
 
             <div dangerouslySetInnerHTML={{ __html: blog.content }}></div>
 
+            <div className="blog-details-download-pdf mt-2">
+              <a href={process.env.REACT_APP_BE_URL + "/files/downloadPDF/" + this.state.blog._id}>
+                Download PDF
+              </a></div>
+
             <div className="mt-5">{this.state.comments === [] ? <></> : this.state.comments.map(c => <div key={c._id} className="blog-details-comments-container"><span className="blog-details-comment-author">{c.name}:</span><span className="blog-details-single-comment"><i className="fas fa-quote-left"></i>{c.text}</span></div>)}</div>
 
             <CommentForm post={this.props.match.params} reloadPage={this.reloadPage.bind(this)} />

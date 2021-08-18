@@ -31,7 +31,6 @@ export default class CoverButton extends Component {
     }
 
   render() {
-      console.log(this.state)
     return (
         <Form onSubmit={e => this.uploadCover(e, this.props.post.id)}>
         {/* Implement Dummy Button for file upload so we can control appearance        */}
